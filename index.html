@@ -76,6 +76,8 @@
     }
 
     .nav-brand { display:flex; align-items:center; gap:14px; text-decoration:none }
+    .cube-svg { color:var(--text) }
+    .cube-svg polygon, .cube-svg line { stroke:var(--text) }
     .nav-wordmark { font-family:'Rajdhani',sans-serif; font-size:1.25rem; font-weight:700; color:var(--text); letter-spacing:.05em; line-height:1 }
     .nav-wordmark em { color:var(--red); font-style:normal }
     .nav-slogan { font-size:.56rem; letter-spacing:.16em; text-transform:uppercase; color:var(--sub); font-weight:300; margin-top:1px }
@@ -426,7 +428,7 @@
 <!-- NAV -->
 <nav>
   <a class="nav-brand" href="#">
-    <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
+    <svg class="cube-svg" width="32" height="32" viewBox="0 0 80 80" fill="none">
       <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="currentColor" stroke-width="2.5" fill="none"/>
       <line x1="40" y1="8"  x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
       <line x1="8"  y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
@@ -460,7 +462,7 @@
 
 <!-- HERO -->
 <div class="hero">
-  <svg class="bg-cube" width="480" height="480" viewBox="0 0 80 80" fill="none">
+  <svg class="bg-cube" style="color:var(--text)" width="480" height="480" viewBox="0 0 80 80" fill="none">
     <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="currentColor" stroke-width="1.5" fill="none"/>
     <line x1="40" y1="8"  x2="40" y2="40" stroke="currentColor" stroke-width="1.5"/>
     <line x1="8"  y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="1.5"/>
@@ -470,7 +472,7 @@
 
   <div class="hero-inner">
     <div class="brand-block">
-      <svg width="68" height="68" viewBox="0 0 80 80" fill="none">
+      <svg class="cube-svg" width="68" height="68" viewBox="0 0 80 80" fill="none">
         <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="currentColor" stroke-width="2.5" fill="none"/>
         <line x1="40" y1="8"  x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
         <line x1="8"  y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
@@ -721,7 +723,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">
-    <svg width="56" height="56" viewBox="0 0 80 80" fill="none">
+    <svg class="cube-svg" width="56" height="56" viewBox="0 0 80 80" fill="none">
       <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="currentColor" stroke-width="2.5" fill="none"/>
       <line x1="40" y1="8"  x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
       <line x1="8"  y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
