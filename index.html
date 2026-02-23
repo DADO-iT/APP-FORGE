@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>APP_FORGE — DADO iT · Others think it. We do it.</title>
+  <meta name="description" content="Automated Software Packaging & Deployment for baramundi. By DADO iT."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── THEMES ── */
+    [data-theme="dark"] {
+      --bg:      #0C0C0E;
+      --bg2:     #141416;
+      --bg3:     #1C1C20;
+      --text:    #F0EDE8;
+      --sub:     #7A7A88;
+      --dim:     #3A3A44;
+      --border:  rgba(255,255,255,0.06);
+      --grid:    rgba(255,255,255,0.025);
+      --card-bg: #141416;
+      --shadow:  0 4px 32px rgba(0,0,0,0.5);
+      --logo:    url('assets/dadoit-logo-dark.png');
+      --logo-footer: url('assets/dadoit-logo-dark.png');
+    }
+    [data-theme="light"] {
+      --bg:      #F2F0EC;
+      --bg2:     #FFFFFF;
+      --bg3:     #ECEAE6;
+      --text:    #16161A;
+      --sub:     #5A5A68;
+      --dim:     #AAAAB8;
+      --border:  rgba(0,0,0,0.07);
+      --grid:    rgba(0,0,0,0.04);
+      --card-bg: #FFFFFF;
+      --shadow:  0 4px 24px rgba(0,0,0,0.08);
+      --logo:    url('assets/dadoit-logo-light.png');
+      --logo-footer: url('assets/dadoit-logo-light.png');
+    }
+
+    :root {
+      --red:     #C41E3A;
+      --red-d:   #9A1830;
+      --rose:    #E8A0AB;
+      --glow:    rgba(196,30,58,0.14);
+    }
+
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+    html { scroll-behavior:smooth }
+    body {
+      font-family:'Inter',sans-serif;
+      background:var(--bg); color:var(--text);
+      overflow-x:hidden;
+      transition: background .3s, color .3s;
+    }
+    body::before {
+      content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size:60px 60px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position:sticky; top:0; z-index:200; height:64px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 6vw;
+      background:rgba(12,12,14,0.88);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      transition: background .3s, border-color .3s;
+    }
+    [data-theme="light"] nav {
+      background:rgba(242,240,236,0.9);
+    }
+
+    .nav-brand { display:flex; align-items:center; gap:14px; text-decoration:none }
+
+    /* Logo image swaps with theme */
+    .nav-logo-img {
+      height:36px; width:auto;
+      transition: opacity .3s;
+    }
+    .nav-logo-img.dark-logo { display:block }
+    .nav-logo-img.light-logo { display:none }
+    [data-theme="light"] .nav-logo-img.dark-logo { display:none }
+    [data-theme="light"] .nav-logo-img.light-logo { display:block }
+
+    .nav-right { display:flex; align-items:center; gap:8px }
+    .nl {
+      font-size:.8rem; color:var(--sub); text-decoration:none;
+      padding:6px 12px; border-radius:6px; transition:.2s;
+    }
+    .nl:hover { color:var(--text); background:rgba(128,128,128,0.1) }
+
+    .ncta {
+      font-family:'Rajdhani',sans-serif; font-size:.9rem; font-weight:700;
+      background:var(--red); color:#fff; padding:8px 18px; border-radius:7px;
+      text-decoration:none; letter-spacing:.04em; transition:.2s;
+    }
+    .ncta:hover { background:var(--red-d) }
+
+    /* Language + Theme toggles */
+    .lang-toggle {
+      display:flex;
+      background:var(--bg3); border:1px solid var(--border); border-radius:6px; overflow:hidden;
+    }
+    .lang-btn {
+      font-family:'Rajdhani',sans-serif; font-size:.78rem; font-weight:600;
+      letter-spacing:.06em; padding:5px 11px; border:none; cursor:pointer;
+      background:transparent; color:var(--sub); transition:.2s;
+    }
+    .lang-btn.active { background:var(--red); color:#fff }
+
+    .theme-btn {
+      width:34px; height:34px; border-radius:7px;
+      border:1px solid var(--border); background:var(--bg3);
+      color:var(--sub); cursor:pointer; font-size:.95rem;
+      display:flex; align-items:center; justify-content:center;
+      transition:.2s;
+    }
+    .theme-btn:hover { border-color:var(--red); color:var(--red) }
+
+    /* ── HERO ── */
+    .hero {
+      position:relative; z-index:1;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      min-height:100vh; padding:60px 6vw; text-align:center; overflow:hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; top:40%; left:50%; transform:translate(-50%,-50%);
+      width:900px; height:600px;
+      background:radial-gradient(ellipse, var(--glow) 0%, transparent 65%);
+      pointer-events:none;
+    }
+    .bg-cube {
+      position:absolute; right:-60px; top:50%; transform:translateY(-50%);
+      opacity:.035; pointer-events:none;
+    }
+    [data-theme="light"] .bg-cube { opacity:.06 }
+
+    .hero-inner { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center }
+
+    /* Hero logo — big, swaps with theme */
+    .hero-logo-img {
+      height:80px; width:auto; margin-bottom:20px;
+      transition: opacity .3s;
+    }
+    .hero-logo-img.dark-logo { display:block }
+    .hero-logo-img.light-logo { display:none }
+    [data-theme="light"] .hero-logo-img.dark-logo { display:none }
+    [data-theme="light"] .hero-logo-img.light-logo { display:block }
+
+    .hero-divider {
+      width:1px; height:32px;
+      background:linear-gradient(to bottom, transparent, var(--dim), transparent);
+      margin:18px 0;
+    }
+    .hero-product {
+      font-family:'Rajdhani',sans-serif;
+      font-size:clamp(3.5rem,9vw,7rem); font-weight:700;
+      line-height:.9; letter-spacing:-.01em; margin-bottom:8px;
+    }
+    .hero-product .acc { color:var(--red) }
+
+    .hero-tagline {
+      font-family:'IBM Plex Mono',monospace;
+      font-size:.78rem; letter-spacing:.15em; color:var(--rose);
+      text-transform:uppercase; margin-bottom:34px;
+      opacity:.8;
+    }
+    [data-theme="light"] .hero-tagline { color:var(--red-d); opacity:.7 }
+
+    .hero-desc {
+      font-size:1.05rem; font-weight:300; color:var(--sub);
+      max-width:540px; line-height:1.75; margin-bottom:44px;
+    }
+    .hero-btns { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom:60px }
+
+    .btn-p {
+      font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700;
+      letter-spacing:.05em; background:var(--red); color:#fff;
+      padding:14px 30px; border-radius:9px; text-decoration:none;
+      transition:background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn-p:hover { background:var(--red-d); transform:translateY(-2px); box-shadow:0 10px 30px rgba(196,30,58,.35) }
+
+    .btn-g {
+      font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:600;
+      letter-spacing:.05em; background:transparent; color:var(--text);
+      padding:14px 30px; border-radius:9px; text-decoration:none;
+      border:1px solid var(--border); transition:.2s;
+    }
+    .btn-g:hover { border-color:rgba(196,30,58,.45); background:var(--glow) }
+
+    /* Stats strip */
+    .stats-strip {
+      display:flex; background:var(--bg2);
+      border:1px solid var(--border); border-radius:12px; overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .stat { padding:18px 28px; border-right:1px solid var(--border); display:flex; flex-direction:column; gap:4px }
+    .stat:last-child { border-right:none }
+    .sv { font-family:'Rajdhani',sans-serif; font-size:1.7rem; font-weight:700; color:var(--text); line-height:1 }
+    .sv span { color:var(--red) }
+    .sl { font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dim) }
+
+    /* ── SLOGAN BAND ── */
+    .slogan-band {
+      position:relative; z-index:1; background:var(--red);
+      padding:28px 6vw; display:flex; align-items:center; justify-content:center;
+      gap:24px; overflow:hidden;
+    }
+    .slogan-band::before {
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(-45deg,transparent,transparent 20px,rgba(0,0,0,0.06) 20px,rgba(0,0,0,0.06) 21px);
+    }
+    .slogan-text {
+      position:relative;
+      font-family:'Rajdhani',sans-serif;
+      font-size:clamp(1.4rem,3.5vw,2.2rem); font-weight:700;
+      letter-spacing:.12em; color:#fff; text-transform:uppercase;
+    }
+    .slogan-text .d { opacity:.5 }
+    .scube { width:34px; height:34px; opacity:.6; flex-shrink:0 }
+
+    /* ── SECTIONS ── */
+    section { position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:80px 6vw }
+
+    .eyebrow {
+      font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+      letter-spacing:.2em; color:var(--red); text-transform:uppercase;
+      display:flex; align-items:center; gap:10px; margin-bottom:12px;
+    }
+    .eyebrow::before { content:''; width:22px; height:2px; background:var(--red) }
+
+    h2 {
+      font-family:'Rajdhani',sans-serif;
+      font-size:clamp(1.8rem,4vw,2.8rem); font-weight:700;
+      letter-spacing:.02em; line-height:1; margin-bottom:40px;
+    }
+
+    /* ── FLOW ── */
+    .flow {
+      display:flex; align-items:center;
+      background:var(--bg2); border:1px solid var(--border);
+      border-radius:14px; padding:36px 28px; overflow-x:auto; gap:0;
+      box-shadow:var(--shadow);
+    }
+    .fstep { flex:1; min-width:100px; display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center }
+    .ficon {
+      width:50px; height:50px; border-radius:12px;
+      background:var(--glow); border:1px solid rgba(196,30,58,.2);
+      display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+    }
+    .flabel { font-size:.75rem; color:var(--sub); line-height:1.3 }
+    .farrow { flex-shrink:0; color:var(--dim); font-size:1.1rem; padding:0 4px }
+
+    /* ── FEATURE GRID ── */
+    .fgrid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+      gap:1px; background:var(--border);
+      border:1px solid var(--border); border-radius:14px; overflow:hidden;
+    }
+    .fcell { background:var(--bg2); padding:30px 26px; transition:background .2s }
+    .fcell:hover { background:var(--bg3) }
+    .fi { font-size:1.5rem; margin-bottom:14px }
+    .ft { font-family:'Rajdhani',sans-serif; font-size:1.05rem; font-weight:700; letter-spacing:.04em; color:var(--text); margin-bottom:8px }
+    .fd { font-size:.865rem; color:var(--sub); line-height:1.68 }
+    .ftags { display:flex; flex-wrap:wrap; gap:5px; margin-top:14px }
+    .ftag {
+      font-family:'IBM Plex Mono',monospace; font-size:.6rem;
+      padding:2px 8px; border-radius:3px;
+      background:rgba(128,128,128,.08); color:var(--dim); border:1px solid var(--border);
+    }
+
+    /* ── EDITIONS ── */
+    .editions {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:14px;
+    }
+    .edition-card {
+      background:var(--bg2); border:1px solid var(--border); border-radius:14px;
+      padding:28px 24px; display:flex; flex-direction:column; gap:16px;
+      transition:border-color .2s; box-shadow:var(--shadow);
+    }
+    .edition-card.highlight { border-color:rgba(196,30,58,.4) }
+    .edition-card:hover { border-color:rgba(196,30,58,.35) }
+    .edition-name {
+      font-family:'Rajdhani',sans-serif; font-size:1.3rem; font-weight:700;
+      color:var(--text); letter-spacing:.04em;
+    }
+    .edition-badge {
+      font-family:'IBM Plex Mono',monospace; font-size:.6rem;
+      padding:2px 8px; border-radius:3px; margin-left:8px;
+      background:var(--glow); color:var(--rose); border:1px solid rgba(196,30,58,.25);
+    }
+    [data-theme="light"] .edition-badge { color:var(--red-d) }
+    .edition-desc { font-size:.85rem; color:var(--sub); line-height:1.6 }
+    .edition-features { display:flex; flex-direction:column; gap:6px }
+    .ef {
+      font-size:.82rem; color:var(--sub);
+      display:flex; align-items:center; gap:8px;
+    }
+    .ef::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--dim); flex-shrink:0 }
+    .ef.on { color:var(--text) }
+    .ef.on::before { background:var(--red) }
+
+    /* ── COMPONENTS ── */
+    .comp-table { background:var(--bg2); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:var(--shadow) }
+    .comp-row { display:flex; align-items:stretch; border-bottom:1px solid var(--border); transition:background .2s }
+    .comp-row:last-child { border-bottom:none }
+    .comp-row:hover { background:var(--bg3) }
+    .comp-icon { flex-shrink:0; width:56px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; border-right:1px solid var(--border) }
+    .comp-info { flex:1; padding:18px 22px }
+    .comp-name { font-family:'IBM Plex Mono',monospace; font-size:.82rem; font-weight:500; color:var(--text); margin-bottom:4px }
+    .comp-name .edit {
+      font-size:.6rem; margin-left:8px; padding:1px 6px; border-radius:3px;
+      background:var(--glow); color:var(--rose); border:1px solid rgba(196,30,58,.2);
+    }
+    [data-theme="light"] .comp-name .edit { color:var(--red-d) }
+    .comp-desc { font-size:.82rem; color:var(--sub); line-height:1.5 }
+
+    /* ── ROADMAP ── */
+    .rmap { border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:var(--shadow) }
+    .rrow { display:flex; align-items:stretch; border-bottom:1px solid var(--border); transition:background .2s }
+    .rrow:last-child { border-bottom:none }
+    .rrow:hover { background:var(--bg3) }
+    .rver { flex-shrink:0; width:72px; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:.72rem; font-weight:500; color:var(--sub); border-right:1px solid var(--border); padding:18px 0 }
+    .rrow.done .rver { color:#4caf7d }
+    .rrow.active .rver { color:var(--red) }
+    .rinfo { flex:1; padding:18px 22px; display:flex; align-items:center; gap:14px; flex-wrap:wrap }
+    .rname { font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; color:var(--text); min-width:120px }
+    .rdesc { flex:1; font-size:.83rem; color:var(--sub); min-width:160px }
+    .rb { font-family:'IBM Plex Mono',monospace; font-size:.6rem; padding:3px 9px; border-radius:3px; flex-shrink:0; letter-spacing:.05em }
+    .prod { background:rgba(76,175,122,.12); color:#4caf7d; border:1px solid rgba(76,175,122,.25) }
+    .dev  { background:rgba(196,30,58,.12); color:var(--rose); border:1px solid rgba(196,30,58,.25) }
+    [data-theme="light"] .dev { color:var(--red-d) }
+    .plan { background:rgba(128,128,128,.08); color:var(--dim); border:1px solid var(--border) }
+    .major { background:rgba(245,200,50,.08); color:#c9930a; border:1px solid rgba(245,200,50,.2) }
+
+    /* ── INSTALL ── */
+    .ibox { background:var(--bg2); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:var(--shadow) }
+    .itop { padding:28px 28px 22px; border-bottom:1px solid var(--border) }
+    .itop h3 { font-family:'Rajdhani',sans-serif; font-size:1.3rem; font-weight:700; margin-bottom:6px }
+    .itop p { font-size:.88rem; color:var(--sub); line-height:1.6 }
+    .idl { display:flex; align-items:center; gap:14px; padding:22px 28px; border-bottom:1px solid var(--border); flex-wrap:wrap }
+    .code { background:var(--bg); border:1px solid var(--border); border-radius:7px; padding:12px 16px; font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:#9bd; flex:1; min-width:240px; white-space:pre; overflow-x:auto; transition:background .3s }
+    [data-theme="light"] .code { color:#2a5a8a }
+    .isteps { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)) }
+    .istep { padding:22px; border-right:1px solid var(--border) }
+    .istep:last-child { border-right:none }
+    .isnum { font-family:'IBM Plex Mono',monospace; font-size:.62rem; color:var(--red); letter-spacing:.1em; margin-bottom:6px }
+    .istitle { font-family:'Rajdhani',sans-serif; font-size:.95rem; font-weight:700; color:var(--text); margin-bottom:5px }
+    .isdesc { font-size:.8rem; color:var(--sub); line-height:1.5 }
+
+    /* ── LICENSE ── */
+    .license-box {
+      background:var(--bg2); border:1px solid var(--border); border-radius:14px;
+      padding:32px 28px; display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap;
+      box-shadow:var(--shadow);
+    }
+    .license-icon { font-size:2.5rem; flex-shrink:0 }
+    .license-text h3 { font-family:'Rajdhani',sans-serif; font-size:1.3rem; font-weight:700; margin-bottom:8px }
+    .license-text p { font-size:.88rem; color:var(--sub); line-height:1.6; max-width:560px }
+    .license-text a { color:var(--red); text-decoration:none }
+    .license-text a:hover { text-decoration:underline }
+
+    /* ── FOOTER ── */
+    footer { position:relative; z-index:1; border-top:1px solid var(--border); padding:0 }
+    .footer-brand {
+      background:var(--bg2); padding:48px 6vw;
+      display:flex; flex-direction:column; align-items:center; gap:20px;
+      text-align:center; border-bottom:1px solid var(--border);
+    }
+    .footer-logo-img { height:60px; width:auto }
+    .footer-logo-img.dark-logo { display:block }
+    .footer-logo-img.light-logo { display:none }
+    [data-theme="light"] .footer-logo-img.dark-logo { display:none }
+    [data-theme="light"] .footer-logo-img.light-logo { display:block }
+    .footer-slogan {
+      font-family:'Rajdhani',sans-serif;
+      font-size:clamp(1rem,2.5vw,1.5rem); font-weight:300;
+      letter-spacing:.2em; color:var(--sub); text-transform:uppercase;
+    }
+    .footer-slogan strong { color:var(--red); font-weight:700 }
+    .footer-bottom { padding:20px 6vw; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px }
+    .footer-copy { font-size:.76rem; color:var(--dim); font-weight:300 }
+    .footer-copy strong { color:var(--sub); font-weight:500 }
+    .footer-links { display:flex; gap:16px }
+    .footer-links a { font-size:.76rem; color:var(--dim); text-decoration:none; transition:.2s }
+    .footer-links a:hover { color:var(--red) }
+
+    /* ── LANGUAGE ── */
+    [data-lang-de], [data-lang-en] { display:none }
+    [data-lang="de"] [data-lang-de] { display:revert }
+    [data-lang="en"] [data-lang-en] { display:revert }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity .5s ease, transform .5s ease }
+    .reveal.in { opacity:1; transform:none }
+
+    @media(max-width:640px) {
+      .stats-strip { flex-wrap:wrap }
+      .stat { border-right:none; border-bottom:1px solid var(--border); width:50% }
+      .flow { flex-direction:column }
+      .farrow { transform:rotate(90deg) }
+      nav .nl { display:none }
+      .istep { border-right:none; border-bottom:1px solid var(--border) }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">
+    <img class="nav-logo-img dark-logo"  src="assets/dadoit-logo-dark.png"  alt="DADO iT" onerror="this.style.display='none'"/>
+    <img class="nav-logo-img light-logo" src="assets/dadoit-logo-light.png" alt="DADO iT" onerror="this.style.display='none'"/>
+  </a>
+  <div class="nav-right">
+    <a class="nl" href="#features"   data-lang-en>Features</a>
+    <a class="nl" href="#features"   data-lang-de>Features</a>
+    <a class="nl" href="#editions"   data-lang-en>Editions</a>
+    <a class="nl" href="#editions"   data-lang-de>Editionen</a>
+    <a class="nl" href="#roadmap"    data-lang-en>Roadmap</a>
+    <a class="nl" href="#roadmap"    data-lang-de>Roadmap</a>
+    <a class="nl" href="#install"    data-lang-en>Install</a>
+    <a class="nl" href="#install"    data-lang-de>Installation</a>
+
+    <div class="lang-toggle">
+      <button class="lang-btn" onclick="setLang('de')">DE</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    <a class="ncta" href="https://github.com/DADO-iT/APP-FORGE/releases/latest">⬇ Download</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <svg class="bg-cube" width="480" height="480" viewBox="0 0 80 80" fill="none">
+    <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    <line x1="40" y1="8"  x2="40" y2="40" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="8"  y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="72" y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="1.5"/>
+    <rect x="31" y="31" width="16" height="16" fill="#C41E3A" opacity=".5"/>
+  </svg>
+
+  <div class="hero-inner">
+    <img class="hero-logo-img dark-logo"  src="assets/dadoit-logo-dark.png"  alt="DADO iT — Others think it. We do it." onerror="this.style.display='none'"/>
+    <img class="hero-logo-img light-logo" src="assets/dadoit-logo-light.png" alt="DADO iT — Others think it. We do it." onerror="this.style.display='none'"/>
+
+    <div class="hero-divider"></div>
+
+    <div class="hero-product">APP<span class="acc">_</span>FORGE</div>
+    <div class="hero-tagline">
+      <span data-lang-en>baramundi Packaging Automation &nbsp;·&nbsp; v2.1 Anvil</span>
+      <span data-lang-de>baramundi Paketierungs-Automation &nbsp;·&nbsp; v2.1 Anvil</span>
+    </div>
+
+    <p class="hero-desc">
+      <span data-lang-en>From version detection to production deployment —<br/>fully automated, enterprise-grade, zero manual steps.</span>
+      <span data-lang-de>Von der Versionserkennung bis zur Produktionsfreigabe —<br/>vollautomatisch, enterprise-tauglich, ohne manuelle Schritte.</span>
+    </p>
+
+    <div class="hero-btns">
+      <a class="btn-p" href="https://github.com/DADO-iT/APP-FORGE/releases/latest">
+        <span data-lang-en>⬇️ &nbsp;Download Setup.exe</span>
+        <span data-lang-de>⬇️ &nbsp;Setup.exe herunterladen</span>
+      </a>
+      <a class="btn-g" href="#features">
+        <span data-lang-en>Explore Features</span>
+        <span data-lang-de>Features entdecken</span>
+      </a>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat"><div class="sv">2<span>.</span>1</div><div class="sl"><span data-lang-en>Version</span><span data-lang-de>Version</span></div></div>
+      <div class="stat"><div class="sv">bc<span>1+2</span></div><div class="sl"><span data-lang-en>APIs</span><span data-lang-de>APIs</span></div></div>
+      <div class="stat"><div class="sv"><span>3</span></div><div class="sl"><span data-lang-en>Sources</span><span data-lang-de>Quellen</span></div></div>
+      <div class="stat"><div class="sv">AES<span>&#8209;256</span></div><div class="sl"><span data-lang-en>Encryption</span><span data-lang-de>Verschlüsselung</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLOGAN BAND -->
+<div class="slogan-band">
+  <svg class="scube" width="34" height="34" viewBox="0 0 80 80" fill="none">
+    <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="white" stroke-width="3" fill="none"/>
+    <line x1="40" y1="8"  x2="40" y2="40" stroke="white" stroke-width="3"/>
+    <line x1="8"  y1="24" x2="40" y2="40" stroke="white" stroke-width="3"/>
+    <line x1="72" y1="24" x2="40" y2="40" stroke="white" stroke-width="3"/>
+    <rect x="31" y="31" width="16" height="16" fill="white" opacity=".6"/>
+  </svg>
+  <div class="slogan-text"><span class="d">OTHERS THINK IT.&nbsp;</span>WE DO IT.</div>
+  <svg class="scube" width="34" height="34" viewBox="0 0 80 80" fill="none">
+    <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="white" stroke-width="3" fill="none"/>
+    <line x1="40" y1="8"  x2="40" y2="40" stroke="white" stroke-width="3"/>
+    <line x1="8"  y1="24" x2="40" y2="40" stroke="white" stroke-width="3"/>
+    <line x1="72" y1="24" x2="40" y2="40" stroke="white" stroke-width="3"/>
+    <rect x="31" y="31" width="16" height="16" fill="white" opacity=".6"/>
+  </svg>
+</div>
+
+<!-- FLOW -->
+<section>
+  <div class="eyebrow"><span data-lang-en>How it works</span><span data-lang-de>So funktioniert's</span></div>
+  <h2><span data-lang-en>Fire & Forget</span><span data-lang-de>Einrichten & Vergessen</span></h2>
+  <div class="flow reveal">
+    <div class="fstep"><div class="ficon">🔍</div><div class="flabel"><span data-lang-en>Detect<br/>Version</span><span data-lang-de>Version<br/>erkennen</span></div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="ficon">⬇️</div><div class="flabel"><span data-lang-en>Download<br/>Installer</span><span data-lang-de>Installer<br/>herunterladen</span></div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="ficon">📦</div><div class="flabel"><span data-lang-en>Create<br/>Package</span><span data-lang-de>Paket<br/>erstellen</span></div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="ficon">🚀</div><div class="flabel"><span data-lang-en>Deploy<br/>Job</span><span data-lang-de>Job<br/>deployen</span></div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="ficon">✅</div><div class="flabel"><span data-lang-en>Test &<br/>Approve</span><span data-lang-de>Testen &<br/>Freigeben</span></div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="ficon">🏭</div><div class="flabel"><span data-lang-en>Production<br/>Live</span><span data-lang-de>Produktion<br/>live</span></div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="eyebrow"><span data-lang-en>Core Capabilities</span><span data-lang-de>Kernfunktionen</span></div>
+  <h2><span data-lang-en>Built for Enterprise</span><span data-lang-de>Für den Enterprise-Einsatz</span></h2>
+  <div class="fgrid reveal">
+    <div class="fcell">
+      <div class="fi">⚡</div>
+      <div class="ft"><span data-lang-en>Automatic Version Detection</span><span data-lang-de>Automatische Versionserkennung</span></div>
+      <p class="fd"><span data-lang-en>GitHub Releases, Direct URLs & Watcher Folders. ETag & Last-Modified prevent unnecessary downloads.</span><span data-lang-de>GitHub Releases, direkte URLs & Watcher-Ordner. ETag & Last-Modified verhindern unnötige Downloads.</span></p>
+      <div class="ftags"><span class="ftag">GitHub API</span><span class="ftag">ETag</span><span class="ftag">Watcher</span></div>
+    </div>
+    <div class="fcell">
+      <div class="fi">📦</div>
+      <div class="ft"><span data-lang-en>Zero-Touch Packaging</span><span data-lang-de>Vollautomatische Paketierung</span></div>
+      <p class="fd"><span data-lang-en>Creates Software objects, deployment jobs & all baramundi variables automatically.</span><span data-lang-de>Erstellt Software-Objekte, Deployment-Jobs und alle baramundi-Variablen vollautomatisch.</span></p>
+      <div class="ftags"><span class="ftag">bc1.1 API</span><span class="ftag">bc2.0 API</span><span class="ftag">Parallel</span></div>
+    </div>
+    <div class="fcell">
+      <div class="fi">🔐</div>
+      <div class="ft"><span data-lang-en>Enterprise Security</span><span data-lang-de>Enterprise-Sicherheit</span></div>
+      <p class="fd"><span data-lang-en>AES-256-CBC credential encryption, hardware-bound licensing. OAuth Device Flow for GitHub — token never stored on disk.</span><span data-lang-de>AES-256-CBC Verschlüsselung, Hardware-gebundene Lizenzierung. OAuth Device Flow für GitHub — kein Token auf der Disk.</span></p>
+      <div class="ftags"><span class="ftag">AES-256</span><span class="ftag">OAuth</span><span class="ftag">HW-Bound</span></div>
+    </div>
+    <div class="fcell">
+      <div class="fi">📋</div>
+      <div class="ft"><span data-lang-en>Full Audit Trail</span><span data-lang-de>Vollständiger Audit-Trail</span></div>
+      <p class="fd"><span data-lang-en>CREATE_DATE, PROD_DATE, ETAG, TEST_STATUS on every package. Production approval is always explicit.</span><span data-lang-de>CREATE_DATE, PROD_DATE, ETAG, TEST_STATUS auf jedem Paket. Produktionsfreigabe immer explizit.</span></p>
+      <div class="ftags"><span class="ftag">PROD_DATE</span><span class="ftag">Audit</span><span class="ftag">Controlled</span></div>
+    </div>
+    <div class="fcell">
+      <div class="fi">🌐</div>
+      <div class="ft"><span data-lang-en>Bandwidth Optimized</span><span data-lang-de>Bandbreitenoptimiert</span></div>
+      <p class="fd"><span data-lang-en>HTTP HEAD checks before any download. Smart folder cache loaded once at startup.</span><span data-lang-de>HTTP HEAD-Prüfung vor jedem Download. Ordner-Cache wird einmalig beim Start geladen.</span></p>
+      <div class="ftags"><span class="ftag">HTTP HEAD</span><span class="ftag">Smart Cache</span></div>
+    </div>
+    <div class="fcell">
+      <div class="fi">📬</div>
+      <div class="ft"><span data-lang-en>Automated Reporting</span><span data-lang-de>Automatisches Reporting</span></div>
+      <p class="fd"><span data-lang-en>HTML reports after every run via SMTP OnPrem or Microsoft 365 — with your corporate identity.</span><span data-lang-de>HTML-Reports nach jedem Lauf per SMTP oder Microsoft 365 — mit Corporate Identity.</span></p>
+      <div class="ftags"><span class="ftag">SMTP</span><span class="ftag">M365</span><span class="ftag">HTML</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDITIONS -->
+<section id="editions">
+  <div class="eyebrow"><span data-lang-en>Choose your edition</span><span data-lang-de>Edition wählen</span></div>
+  <h2><span data-lang-en>Free for Everyone</span><span data-lang-de>Kostenlos für alle</span></h2>
+  <div class="editions reveal">
+    <div class="edition-card">
+      <div><span class="edition-name">Community</span></div>
+      <p class="edition-desc">
+        <span data-lang-en>Perfect for getting started. All the essentials to automate your software packaging workflow.</span>
+        <span data-lang-de>Ideal für den Einstieg. Alle Kernfunktionen für die automatisierte Softwarepaketierung.</span>
+      </p>
+      <div class="edition-features">
+        <div class="ef on"><span data-lang-en>GitHub Downloads</span><span data-lang-de>GitHub Downloads</span></div>
+        <div class="ef on"><span data-lang-en>Direct Downloads</span><span data-lang-de>Direkte Downloads</span></div>
+        <div class="ef on"><span data-lang-en>Watcher Integration</span><span data-lang-de>Watcher Integration</span></div>
+        <div class="ef on"><span data-lang-en>HTML Reports</span><span data-lang-de>HTML-Reports</span></div>
+        <div class="ef"><span data-lang-en>Email Reports</span><span data-lang-de>Email-Reports</span></div>
+        <div class="ef"><span data-lang-en>Production Jobs</span><span data-lang-de>Produktions-Jobs</span></div>
+      </div>
+    </div>
+    <div class="edition-card highlight">
+      <div><span class="edition-name">Professional</span> <span class="edition-badge">POPULAR</span></div>
+      <p class="edition-desc">
+        <span data-lang-en>Full flexibility. All features available — enable only what your environment needs.</span>
+        <span data-lang-de>Volle Flexibilität. Alle Features verfügbar — aktiviere nur was deine Umgebung benötigt.</span>
+      </p>
+      <div class="edition-features">
+        <div class="ef on"><span data-lang-en>GitHub Downloads</span><span data-lang-de>GitHub Downloads</span></div>
+        <div class="ef on"><span data-lang-en>Direct Downloads</span><span data-lang-de>Direkte Downloads</span></div>
+        <div class="ef on"><span data-lang-en>Watcher Integration</span><span data-lang-de>Watcher Integration</span></div>
+        <div class="ef on"><span data-lang-en>HTML Reports</span><span data-lang-de>HTML-Reports</span></div>
+        <div class="ef on"><span data-lang-en>Email Reports (optional)</span><span data-lang-de>Email-Reports (optional)</span></div>
+        <div class="ef on"><span data-lang-en>Production Jobs (optional)</span><span data-lang-de>Produktions-Jobs (optional)</span></div>
+      </div>
+    </div>
+    <div class="edition-card">
+      <div><span class="edition-name">Enterprise</span></div>
+      <p class="edition-desc">
+        <span data-lang-en>Complete automation with full validation. Corporate Identity, email and production workflow all required.</span>
+        <span data-lang-de>Vollständige Automation mit Validierung. Corporate Identity, Email und Produktions-Workflow alle Pflicht.</span>
+      </p>
+      <div class="edition-features">
+        <div class="ef on"><span data-lang-en>GitHub Downloads</span><span data-lang-de>GitHub Downloads</span></div>
+        <div class="ef on"><span data-lang-en>Direct Downloads</span><span data-lang-de>Direkte Downloads</span></div>
+        <div class="ef on"><span data-lang-en>Watcher Integration</span><span data-lang-de>Watcher Integration</span></div>
+        <div class="ef on"><span data-lang-en>HTML Reports</span><span data-lang-de>HTML-Reports</span></div>
+        <div class="ef on"><span data-lang-en>Email Reports (required)</span><span data-lang-de>Email-Reports (Pflicht)</span></div>
+        <div class="ef on"><span data-lang-en>Production Jobs (required)</span><span data-lang-de>Produktions-Jobs (Pflicht)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPONENTS -->
+<section id="components">
+  <div class="eyebrow"><span data-lang-en>What's included</span><span data-lang-de>Was enthalten ist</span></div>
+  <h2><span data-lang-en>Components</span><span data-lang-de>Komponenten</span></h2>
+  <div class="comp-table reveal">
+    <div class="comp-row"><div class="comp-icon">⚙️</div><div class="comp-info"><div class="comp-name">SETUP-GUI.exe</div><div class="comp-desc"><span data-lang-en>Browser-based configuration wizard. Set up your baramundi connection, credentials, folder targets and email reporting.</span><span data-lang-de>Browser-basierter Konfigurations-Assistent. Richtet baramundi-Verbindung, Credentials, Ordner-Ziele und Email-Reporting ein.</span></div></div></div>
+    <div class="comp-row"><div class="comp-icon">🎨</div><div class="comp-info"><div class="comp-name">COMPOSER.exe</div><div class="comp-desc"><span data-lang-en>Application definition tool with Chocolatey integration. Define which software APP_FORGE should track and deploy.</span><span data-lang-de>Tool für App-Definitionen mit Chocolatey-Integration. Definiert welche Software APP_FORGE überwachen und deployen soll.</span></div></div></div>
+    <div class="comp-row"><div class="comp-icon">⚒️</div><div class="comp-info"><div class="comp-name">CORE.exe</div><div class="comp-desc"><span data-lang-en>The packaging engine. Native AOT compiled for maximum performance and tamper resistance. Handles everything from detection to reporting.</span><span data-lang-de>Die Paketierungs-Engine. Native AOT kompiliert für maximale Performance und Manipulationsschutz. Verarbeitet alles von der Erkennung bis zum Report.</span></div></div></div>
+    <div class="comp-row"><div class="comp-icon">▶️</div><div class="comp-info"><div class="comp-name">3_START-FORGE.ps1</div><div class="comp-desc"><span data-lang-en>The launcher. Run manually or via Windows Scheduled Task. Supports phases (Download / Deploy / Jobs / Report / All), WhatIf simulation and -Force for unattended execution.</span><span data-lang-de>Der Launcher. Manuell oder per Windows Scheduled Task starten. Unterstützt Phasen, WhatIf-Simulation und -Force für unbeaufsichtigte Ausführung.</span></div></div></div>
+    <div class="comp-row"><div class="comp-icon">📝</div><div class="comp-info"><div class="comp-name">1_APPLICATIONS.ps1 <span class="edit">YOU EDIT THIS</span></div><div class="comp-desc"><span data-lang-en>Your application list. Defines which software is tracked. Managed via COMPOSER or edited directly.</span><span data-lang-de>Deine Anwendungsliste. Definiert welche Software überwacht wird. Via COMPOSER oder direkt bearbeiten.</span></div></div></div>
+    <div class="comp-row"><div class="comp-icon">📝</div><div class="comp-info"><div class="comp-name">2_INSTALL-RULES.ps1 <span class="edit">YOU EDIT THIS</span></div><div class="comp-desc"><span data-lang-en>Your install rules and Watcher folder config. Per-application packaging rules, install arguments and Watcher source paths.</span><span data-lang-de>Deine Installationsregeln und Watcher-Ordner-Konfiguration. Paketierungsregeln, Installationsargumente und Watcher-Quellen.</span></div></div></div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install">
+  <div class="eyebrow"><span data-lang-en>Get started</span><span data-lang-de>Loslegen</span></div>
+  <h2><span data-lang-en>Installation</span><span data-lang-de>Installation</span></h2>
+  <div class="ibox reveal">
+    <div class="itop">
+      <h3><span data-lang-en>Requirements</span><span data-lang-de>Voraussetzungen</span></h3>
+      <p>
+        <span data-lang-en>Windows 10 / Server 2016 or later &nbsp;·&nbsp; baramundi bMS 2024 R1+ with <strong>bc1.1 and bc2.0 API</strong> both enabled<br/><span style="color:var(--dim);font-size:.82rem">.NET Runtime & WebView2 are bundled — nothing to pre-install.</span></span>
+        <span data-lang-de>Windows 10 / Server 2016 oder neuer &nbsp;·&nbsp; baramundi bMS 2024 R1+ mit <strong>bc1.1 und bc2.0 API</strong> beide aktiviert<br/><span style="color:var(--dim);font-size:.82rem">.NET Runtime & WebView2 sind im Installer enthalten — nichts vorab zu installieren.</span></span>
+      </p>
+    </div>
+    <div class="idl">
+      <div class="code">.\APP-FORGE-SETUP.exe</div>
+      <a class="btn-p" href="https://github.com/DADO-iT/APP-FORGE/releases/latest">⬇️ &nbsp;<span data-lang-en>Latest Release</span><span data-lang-de>Neueste Version</span></a>
+    </div>
+    <div class="isteps">
+      <div class="istep"><div class="isnum">STEP 01</div><div class="istitle"><span data-lang-en>Run Setup</span><span data-lang-de>Setup starten</span></div><div class="isdesc"><span data-lang-en>Execute APP-FORGE-SETUP.exe — deploys all components automatically.</span><span data-lang-de>APP-FORGE-SETUP.exe ausführen — alle Komponenten werden automatisch installiert.</span></div></div>
+      <div class="istep"><div class="isnum">STEP 02</div><div class="istitle"><span data-lang-en>Configure</span><span data-lang-de>Konfigurieren</span></div><div class="isdesc"><span data-lang-en>SETUP-GUI opens — enter baramundi credentials, API URLs and deployment targets.</span><span data-lang-de>SETUP-GUI öffnet — baramundi-Credentials, API-URLs und Deployment-Ziele eingeben.</span></div></div>
+      <div class="istep"><div class="isnum">STEP 03</div><div class="istitle"><span data-lang-en>Define Apps</span><span data-lang-de>Apps definieren</span></div><div class="isdesc"><span data-lang-en>Open COMPOSER to add your applications or edit 1_APPLICATIONS.ps1 directly.</span><span data-lang-de>COMPOSER öffnen und Anwendungen hinzufügen oder 1_APPLICATIONS.ps1 direkt bearbeiten.</span></div></div>
+      <div class="istep"><div class="isnum">STEP 04</div><div class="istitle"><span data-lang-en>Launch</span><span data-lang-de>Starten</span></div><div class="isdesc"><span data-lang-en>Run 3_START-FORGE.ps1 manually or as a Scheduled Task — let the forge do its work.</span><span data-lang-de>3_START-FORGE.ps1 manuell oder als Scheduled Task starten — der Forge läuft..</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LICENSE -->
+<section id="license">
+  <div class="license-box reveal">
+    <div class="license-icon">📜</div>
+    <div class="license-text">
+      <h3><span data-lang-en>Free License</span><span data-lang-de>Kostenlose Lizenz</span></h3>
+      <p>
+        <span data-lang-en>APP_FORGE is <strong>free of charge</strong>. A free license is required — simply create an issue in our <a href="https://github.com/DADO-iT/APP-FORGE-LICENSES" target="_blank">License Repository</a> to receive yours automatically. We want to know who uses APP_FORGE so we can keep improving it and stay connected with the community.</span>
+        <span data-lang-de>APP_FORGE ist <strong>kostenlos</strong>. Eine kostenlose Lizenz wird benötigt — erstelle einfach ein Issue in unserem <a href="https://github.com/DADO-iT/APP-FORGE-LICENSES" target="_blank">Lizenz-Repository</a> und du erhältst sie automatisch. Wir möchten wissen, wer APP_FORGE nutzt, um es kontinuierlich zu verbessern.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="eyebrow"><span data-lang-en>What's next</span><span data-lang-de>Was kommt als nächstes</span></div>
+  <h2><span data-lang-en>The Forge Roadmap</span><span data-lang-de>Die Forge Roadmap</span></h2>
+  <div class="rmap reveal">
+    <div class="rrow done"><div class="rver">v2.1</div><div class="rinfo"><div class="rname">⚒️ Anvil</div><div class="rdesc"><span data-lang-en>CORE.exe Native AOT · SETUP-GUI · COMPOSER · Watcher · AES-256 · Job Cleanup. Go-Live Dec 23 2025.</span><span data-lang-de>CORE.exe Native AOT · SETUP-GUI · COMPOSER · Watcher · AES-256 · Job Cleanup. Go-Live 23. Dez. 2025.</span></div><span class="rb prod"><span data-lang-en>PRODUCTION</span><span data-lang-de>PRODUKTION</span></span></div></div>
+    <div class="rrow active"><div class="rver">v2.3</div><div class="rinfo"><div class="rname">🔨 Hammer</div><div class="rdesc"><span data-lang-en>Enhanced engine, extended source integrations and improved detection capabilities.</span><span data-lang-de>Verbesserte Engine, erweiterte Quellintegrationen und verbesserte Erkennungsfähigkeiten.</span></div><span class="rb dev"><span data-lang-en>IN DEVELOPMENT</span><span data-lang-de>IN ENTWICKLUNG</span></span></div></div>
+    <div class="rrow"><div class="rver">v2.4</div><div class="rinfo"><div class="rname">💨 Bellows</div><div class="rdesc"><span data-lang-en>Application Composer extended features.</span><span data-lang-de>Erweiterte Composer-Features.</span></div><span class="rb plan"><span data-lang-en>PLANNED</span><span data-lang-de>GEPLANT</span></span></div></div>
+    <div class="rrow"><div class="rver">v2.5</div><div class="rinfo"><div class="rname">🔧 Tongs</div><div class="rdesc"><span data-lang-en>Advanced security architecture, unified configuration.</span><span data-lang-de>Erweiterte Sicherheitsarchitektur, einheitliche Konfiguration.</span></div><span class="rb plan"><span data-lang-en>PLANNED</span><span data-lang-de>GEPLANT</span></span></div></div>
+    <div class="rrow"><div class="rver">v3.0</div><div class="rinfo"><div class="rname">⚔️ Damascus</div><div class="rdesc"><span data-lang-en>Major consolidation release — the forge's masterpiece.</span><span data-lang-de>Grosses Konsolidierungs-Release — das Meisterwerk des Forge.</span></div><span class="rb major"><span data-lang-en>MAJOR RELEASE</span><span data-lang-de>MAJOR RELEASE</span></span></div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <svg width="56" height="56" viewBox="0 0 80 80" fill="none">
+      <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="currentColor" stroke-width="2.5" fill="none"/>
+      <line x1="40" y1="8"  x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="8"  y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="72" y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="40" y1="40" x2="40" y2="72" stroke="currentColor" stroke-width="1.5" opacity=".3"/>
+      <rect x="31" y="31" width="16" height="16" fill="#C41E3A"/>
+    </svg>
+    <div class="footer-slogan">Others think it. <strong>We do it.</strong></div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2022–2025 <strong>David Dominguez</strong> — DADO iT &nbsp;·&nbsp; <span data-lang-en>All rights reserved</span><span data-lang-de>Alle Rechte vorbehalten</span></span>
+    <div class="footer-links">
+      <a href="mailto:dadoit@dadoit.net">dadoit@dadoit.net</a>
+      <a href="https://dadoit.net">dadoit.net</a>
+      <a href="https://github.com/DADO-iT/APP-FORGE">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── LANGUAGE ──
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(b =>
+      b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang)
+    );
+  }
+
+  // ── THEME ──
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-btn').textContent = isDark ? '🌙' : '☀️';
+  }
+
+  // Init
+  setLang('en');
+
+  // ── REVEAL ──
+  const obs = new IntersectionObserver(e =>
+    e.forEach(x => { if (x.isIntersecting) x.target.classList.add('in') }),
+    { threshold:.07 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
