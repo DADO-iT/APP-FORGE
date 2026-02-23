@@ -76,6 +76,16 @@
     }
 
     .nav-brand { display:flex; align-items:center; gap:14px; text-decoration:none }
+    .nav-wordmark { font-family:'Rajdhani',sans-serif; font-size:1.25rem; font-weight:700; color:var(--text); letter-spacing:.05em; line-height:1 }
+    .nav-wordmark em { color:var(--red); font-style:normal }
+    .nav-slogan { font-size:.56rem; letter-spacing:.16em; text-transform:uppercase; color:var(--sub); font-weight:300; margin-top:1px }
+    .nav-slogan strong { color:var(--red); font-weight:600 }
+    .brand-block { display:flex; align-items:center; gap:18px; margin-bottom:20px }
+    .brand-text { text-align:left }
+    .brand-name { font-family:'Rajdhani',sans-serif; font-size:2.8rem; font-weight:700; color:var(--text); letter-spacing:.06em; line-height:1 }
+    .brand-name em { color:var(--red); font-style:normal }
+    .brand-slogan { font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--sub); font-weight:300; margin-top:3px }
+    .brand-slogan strong { color:var(--red); font-weight:600 }
 
     /* Logo image swaps with theme */
     .nav-logo-img {
@@ -416,8 +426,17 @@
 <!-- NAV -->
 <nav>
   <a class="nav-brand" href="#">
-    <img class="nav-logo-img dark-logo"  src="assets/dadoit-logo-dark.png"  alt="DADO iT" onerror="this.style.display='none'"/>
-    <img class="nav-logo-img light-logo" src="assets/dadoit-logo-light.png" alt="DADO iT" onerror="this.style.display='none'"/>
+    <svg width="30" height="30" viewBox="0 0 80 80" fill="none">
+      <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="currentColor" stroke-width="3" fill="none"/>
+      <line x1="40" y1="8"  x2="40" y2="40" stroke="currentColor" stroke-width="3"/>
+      <line x1="8"  y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="3"/>
+      <line x1="72" y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="3"/>
+      <rect x="31" y="31" width="16" height="16" fill="#C41E3A"/>
+    </svg>
+    <div>
+      <div class="nav-wordmark">DADO <em>iT</em></div>
+      <div class="nav-slogan">Others think it. <strong>We do it.</strong></div>
+    </div>
   </a>
   <div class="nav-right">
     <a class="nl" href="#features"   data-lang-en>Features</a>
@@ -449,8 +468,20 @@
   </svg>
 
   <div class="hero-inner">
-    <img class="hero-logo-img dark-logo"  src="assets/dadoit-logo-dark.png"  alt="DADO iT — Others think it. We do it." onerror="this.style.display='none'"/>
-    <img class="hero-logo-img light-logo" src="assets/dadoit-logo-light.png" alt="DADO iT — Others think it. We do it." onerror="this.style.display='none'"/>
+    <div class="brand-block">
+      <svg width="68" height="68" viewBox="0 0 80 80" fill="none">
+        <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="currentColor" stroke-width="2.5" fill="none"/>
+        <line x1="40" y1="8"  x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+        <line x1="8"  y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+        <line x1="72" y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+        <line x1="40" y1="40" x2="40" y2="72" stroke="currentColor" stroke-width="1.5" opacity=".3"/>
+        <rect x="31" y="31" width="16" height="16" fill="#C41E3A"/>
+      </svg>
+      <div class="brand-text">
+        <div class="brand-name">DADO <em>iT</em></div>
+        <div class="brand-slogan">Others think it. <strong>We do it.</strong></div>
+      </div>
+    </div>
 
     <div class="hero-divider"></div>
 
