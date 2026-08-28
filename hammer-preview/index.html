@@ -1,131 +1,191 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>APP_FORGE Hammer — Preview · DADO iT</title>
-  <meta name="description" content="A preview of what's coming in APP_FORGE Hammer v2.3. Not yet released — this page tracks progress, not a shipped build."/>
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <style>
-    [data-theme="dark"] {
-      --bg: #0C0C0E; --bg2: #141416; --bg3: #1C1C20;
-      --text: #F0EDE8; --sub: #7A7A88; --dim: #3A3A44;
-      --border: rgba(255,255,255,0.06); --card-bg: #141416;
-      --logo: url('../assets/dadoit-logo-dark.png');
-    }
-    :root { --amber: #D89A3A; --amber-d: #A6741F; --glow: rgba(216,154,58,0.14); }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg); color: var(--text);
-      font-family: 'Inter', sans-serif; line-height: 1.6;
-    }
-    .wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 24px; border-bottom: 1px solid var(--border);
-    }
-    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
-    .brand img { height: 28px; }
-    .brand-text { font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: .5px; }
-    .back { color: var(--sub); text-decoration: none; font-size: 14px; }
-    .back:hover { color: var(--text); }
-    .badge {
-      display: inline-block; padding: 5px 14px; border-radius: 999px;
-      background: var(--glow); color: var(--amber); border: 1px solid var(--amber-d);
-      font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .5px;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 44px;
-      letter-spacing: .5px; margin: 12px 0 8px;
-    }
-    .lede { color: var(--sub); font-size: 17px; max-width: 640px; margin-bottom: 8px; }
-    .disclaimer {
-      background: var(--bg3); border: 1px solid var(--border); border-radius: 10px;
-      padding: 16px 20px; margin: 28px 0; font-size: 14px; color: var(--sub);
-    }
-    .disclaimer strong { color: var(--text); }
-    section { padding: 40px 0; border-top: 1px solid var(--border); }
-    h2 {
-      font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 22px;
-      letter-spacing: .3px; margin-bottom: 20px;
-    }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-    .card {
-      background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px;
-      padding: 20px;
-    }
-    .card .ft { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 16px; margin-bottom: 6px; }
-    .card .fd { color: var(--sub); font-size: 14px; }
-    .mono { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--sub); }
-    footer {
-      text-align: center; padding: 40px 24px; color: var(--dim);
-      font-size: 13px; border-top: 1px solid var(--border);
-    }
-    footer a { color: var(--sub); }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>APP_FORGE Hammer — Preview · DADO iT</title>
+<meta name="description" content="A preview of what's coming in APP_FORGE Hammer v2.3. Not yet released — the current stable version remains v2.1."/>
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  [data-theme="dark"] {
+    --bg:#0C0C0E; --bg2:#141416; --bg3:#1C1C20; --text:#F0EDE8; --sub:#7A7A88; --dim:#3A3A44;
+    --border:rgba(255,255,255,0.06); --grid:rgba(255,255,255,0.025); --shadow:0 4px 32px rgba(0,0,0,0.5);
+  }
+  :root { --red:#C41E3A; --red-d:#9A1830; --rose:#E8A0AB; --glow:rgba(196,30,58,0.14); }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+  body::before{
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:60px 60px;
+  }
+  nav{
+    position:sticky;top:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 6vw;background:rgba(12,12,14,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
+  }
+  .nav-brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+  .cube-svg{color:var(--text)}
+  .nav-wordmark{font-family:'Rajdhani',sans-serif;font-size:1.25rem;font-weight:700;color:var(--text);letter-spacing:.05em;line-height:1}
+  .nav-wordmark em{color:var(--red);font-style:normal}
+  .nav-slogan{font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sub);font-weight:300;margin-top:1px}
+  .nl{font-size:.8rem;color:var(--sub);text-decoration:none;padding:6px 12px;border-radius:6px;transition:.2s}
+  .nl:hover{color:var(--text);background:rgba(128,128,128,.1)}
+
+  .hero{position:relative;z-index:1;padding:80px 6vw 60px;text-align:center;overflow:hidden}
+  .hero::before{
+    content:'';position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);
+    width:900px;height:600px;background:radial-gradient(ellipse,var(--glow) 0%,transparent 65%);pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;max-width:680px;margin:0 auto}
+  .status-badge{
+    display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+    letter-spacing:.15em;text-transform:uppercase;padding:7px 16px;border-radius:999px;
+    background:var(--glow);color:var(--rose);border:1px solid rgba(196,30,58,.3);margin-bottom:24px;
+  }
+  .status-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .hero-product{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:clamp(2.6rem,7vw,4.4rem);line-height:.95;letter-spacing:-.01em;margin-bottom:14px}
+  .hero-product .acc{color:var(--red)}
+  .hero-desc{font-size:1.02rem;font-weight:300;color:var(--sub);line-height:1.75;margin-bottom:28px}
+  .disclaimer{
+    background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 24px;text-align:left;
+    font-size:.85rem;color:var(--sub);line-height:1.6;box-shadow:var(--shadow);
+  }
+  .disclaimer strong{color:var(--text)}
+  .disclaimer a{color:var(--rose)}
+
+  section{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:64px 6vw}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.2em;color:var(--red);
+    text-transform:uppercase;display:flex;align-items:center;gap:10px;margin-bottom:12px;
+  }
+  .eyebrow::before{content:'';width:22px;height:2px;background:var(--red)}
+  h2{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:clamp(1.6rem,3.5vw,2.3rem);letter-spacing:.02em;margin-bottom:36px}
+
+  .fgrid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);
+    border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  }
+  .fcell{background:var(--bg2);padding:28px 24px;transition:background .2s}
+  .fcell:hover{background:var(--bg3)}
+  .fi{font-size:1.4rem;margin-bottom:12px}
+  .ft{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.03em;margin-bottom:8px}
+  .fd{font-size:.85rem;color:var(--sub);line-height:1.65}
+  .ftags{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
+  .ftag{font-family:'IBM Plex Mono',monospace;font-size:.6rem;padding:2px 8px;border-radius:3px;background:rgba(128,128,128,.08);color:var(--dim);border:1px solid var(--border)}
+
+  .mono-box{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--sub)}
+  .mono-box a{color:var(--rose)}
+
+  footer{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:16px;padding:56px 6vw;border-top:1px solid var(--border)}
+  .footer-slogan{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+  .footer-slogan strong{color:var(--red)}
+  .footer-copy{font-size:.75rem;color:var(--dim);text-align:center}
+  .footer-links{display:flex;gap:16px;font-size:.78rem}
+  .footer-links a{color:var(--sub);text-decoration:none}
+  .footer-links a:hover{color:var(--text)}
+</style>
 </head>
 <body>
-  <nav>
-    <a class="brand" href="../">
-      <img src="../assets/dadoit-logo-dark.png" alt="DADO iT"/>
-      <span class="brand-text">DADO <em>iT</em></span>
-    </a>
-    <a class="back" href="../">← Back to APP_FORGE</a>
-  </nav>
 
-  <div class="wrap">
-    <div style="padding-top: 48px;">
-      <span class="badge">● IN DEVELOPMENT — NOT YET RELEASED</span>
-      <h1>APP_FORGE Hammer</h1>
-      <p class="lede">A preview of what's coming in the next generation of APP_FORGE. The current public release remains v2.1 — this page tracks progress toward v2.3, nothing more.</p>
+<nav>
+  <a class="nav-brand" href="../">
+    <svg class="cube-svg" width="32" height="32" viewBox="0 0 80 80" fill="none">
+      <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="currentColor" stroke-width="2.5" fill="none"/>
+      <line x1="40" y1="8"  x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="8"  y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="72" y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+      <line x1="40" y1="40" x2="40" y2="72" stroke="currentColor" stroke-width="1.5" opacity=".3"/>
+      <rect x="31" y="31" width="16" height="16" fill="#C41E3A"/>
+    </svg>
+    <div>
+      <div class="nav-wordmark">DADO <em>iT</em></div>
+      <div class="nav-slogan">Others think it. We do it.</div>
     </div>
+  </a>
+  <a class="nl" href="../">← Back to APP_FORGE</a>
+</nav>
 
+<div class="hero">
+  <div class="hero-inner">
+    <div class="status-badge"><span class="status-dot"></span>In development — not yet released</div>
+    <div class="hero-product">APP_FORGE <span class="acc">Hammer</span></div>
+    <p class="hero-desc">A preview of what's coming in the next generation of APP_FORGE. The current stable release remains <strong style="color:var(--text)">v2.1</strong> — this page only tracks progress toward v2.3.</p>
     <div class="disclaimer">
-      <strong>This is not a release.</strong> Nothing here is downloadable yet. Features listed below are being actively built and may change before Hammer ships. Check <a href="../">the main page</a> for the current, stable v2.1 release.
+      <strong>This is not a release.</strong> Nothing here is downloadable yet, and features may change before Hammer ships. For the current, stable version, see <a href="../">the main APP_FORGE page</a>.
     </div>
-
-    <section>
-      <h2>What's landing in Hammer</h2>
-      <div class="grid" id="feature-grid">
-        <div class="card">
-          <div class="ft">Configurable Resource Folders</div>
-          <div class="fd">Apps can declare a shared "_GLOBAL" resource folder — license files, transforms, shared config — independent of version. Opt-in per app, works the same way for every current and future application.</div>
-        </div>
-        <div class="card">
-          <div class="ft">Native AOT Engine</div>
-          <div class="fd">The core engine compiles to a single native executable — no .NET runtime install required on target systems, faster startup, smaller footprint.</div>
-        </div>
-        <div class="card">
-          <div class="ft">Live Log Streaming</div>
-          <div class="fd">Runs triggered without an interactive session (e.g. via baramundi Deploy Script) now write their log in real time — tail it like any other live log, no more waiting until completion to see progress.</div>
-        </div>
-        <div class="card">
-          <div class="ft">Automatic Bundle Management</div>
-          <div class="fd">One permanent job per application, pointing at a bundle that always carries the current version — versioned test jobs are cleaned up automatically as new releases roll in.</div>
-        </div>
-        <div class="card">
-          <div class="ft">Expanded Version Sources</div>
-          <div class="fd">Beyond GitHub Releases and direct downloads: vendor JSON APIs, HTTP redirect-based version detection, and HTML page scraping for vendors that expose no clean API.</div>
-        </div>
-        <div class="card">
-          <div class="ft">PSADT / BDS Integration</div>
-          <div class="fd">Deep integration with PowerShell App Deployment Toolkit-based installs, including automatic detection-rule handling and production promotion once testing passes.</div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>For build systems &amp; internal tooling</h2>
-      <p class="fd" style="margin-bottom: 12px;">This preview also publishes a machine-readable manifest for internal tooling to check against — not a public update API, just a stable place to look.</p>
-      <p class="mono">GET <a href="manifest.json" style="color:inherit">https://dado-it.github.io/APP-FORGE/hammer-preview/manifest.json</a></p>
-    </section>
   </div>
+</div>
 
-  <footer>
-    <p>APP_FORGE Hammer is under active development. Copyright 2022–2026 David Dominguez — DADO iT.</p>
-  </footer>
+<section id="features">
+  <div class="eyebrow">What's Coming</div>
+  <h2>Landing in Hammer v2.3</h2>
+  <div class="fgrid">
+    <div class="fcell">
+      <div class="fi">📁</div>
+      <div class="ft">Configurable Resource Folders</div>
+      <p class="fd">Apps declare a shared "_GLOBAL" resource folder — license files, transforms, shared config — independent of version, opt-in per app.</p>
+      <div class="ftags"><span class="ftag">Per-App Opt-In</span><span class="ftag">Version-Independent</span></div>
+    </div>
+    <div class="fcell">
+      <div class="fi">⚙️</div>
+      <div class="ft">Native AOT Engine</div>
+      <p class="fd">The core engine compiles to a single native executable — no .NET runtime install required, faster startup, smaller footprint.</p>
+      <div class="ftags"><span class="ftag">Native AOT</span><span class="ftag">Single Binary</span></div>
+    </div>
+    <div class="fcell">
+      <div class="fi">📡</div>
+      <div class="ft">Live Log Streaming</div>
+      <p class="fd">Runs started without an interactive session now write their log in real time — tail it like any other live log, no more waiting until completion.</p>
+      <div class="ftags"><span class="ftag">Real-Time</span><span class="ftag">No Console Needed</span></div>
+    </div>
+    <div class="fcell">
+      <div class="fi">📦</div>
+      <div class="ft">Automatic Bundle Management</div>
+      <p class="fd">One permanent job per application, pointing at a bundle that always carries the current version — old test jobs clean up automatically.</p>
+      <div class="ftags"><span class="ftag">Bundles</span><span class="ftag">Self-Cleaning</span></div>
+    </div>
+    <div class="fcell">
+      <div class="fi">🔍</div>
+      <div class="ft">Expanded Version Sources</div>
+      <p class="fd">Beyond GitHub & direct downloads: vendor JSON APIs, HTTP redirect-based detection, and HTML page scraping for vendors with no clean API.</p>
+      <div class="ftags"><span class="ftag">VersionApi</span><span class="ftag">VersionRedirect</span><span class="ftag">VersionHtml</span></div>
+    </div>
+    <div class="fcell">
+      <div class="fi">🧩</div>
+      <div class="ft">PSADT / BDS Integration</div>
+      <p class="fd">Deep integration with PowerShell App Deployment Toolkit installs, including automatic detection-rule handling and production promotion.</p>
+      <div class="ftags"><span class="ftag">PSADT</span><span class="ftag">Auto-Promote</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">For Internal Tooling</div>
+  <h2>Machine-Readable Status</h2>
+  <p class="fd" style="margin-bottom:16px">This preview also publishes a stable manifest for internal tooling to check against — not a live update API yet, just a fixed place to look.</p>
+  <div class="mono-box">GET <a href="manifest.json">https://dado-it.github.io/APP-FORGE/hammer-preview/manifest.json</a></div>
+</section>
+
+<footer>
+  <svg class="cube-svg" width="40" height="40" viewBox="0 0 80 80" fill="none">
+    <polygon points="40,8 72,24 72,56 40,72 8,56 8,24" stroke="currentColor" stroke-width="2.5" fill="none"/>
+    <line x1="40" y1="8"  x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+    <line x1="8"  y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+    <line x1="72" y1="24" x2="40" y2="40" stroke="currentColor" stroke-width="2.5"/>
+    <line x1="40" y1="40" x2="40" y2="72" stroke="currentColor" stroke-width="1.5" opacity=".3"/>
+    <rect x="31" y="31" width="16" height="16" fill="#C41E3A"/>
+  </svg>
+  <div class="footer-slogan">Others think it. <strong>We do it.</strong></div>
+  <div class="footer-copy">© 2022–2026 David Dominguez — DADO iT · All rights reserved</div>
+  <div class="footer-links">
+    <a href="mailto:dadoit@dadoit.net">dadoit@dadoit.net</a>
+    <a href="https://dadoit.net">dadoit.net</a>
+    <a href="https://github.com/DADO-iT/APP-FORGE">GitHub</a>
+  </div>
+</footer>
+
 </body>
 </html>
