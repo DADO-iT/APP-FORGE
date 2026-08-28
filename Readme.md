@@ -119,7 +119,6 @@ A free license is required — simply create an issue in our [License Repository
 | Version | Codename | Status |
 |---------|----------|--------|
 | **v2.1** | ⚒️ **Anvil** | ✅ Production |
-| v2.2 | 🕳️ Punch | 📋 Planned |
 | v2.3 | 🔨 Hammer | 🔴 In Development · [Preview →](https://dado-it.github.io/APP-FORGE/hammer-preview/) |
 | v2.4 | 💨 Bellows | 📋 Planned |
 | v2.5 | 🔧 Tongs | 📋 Planned |
