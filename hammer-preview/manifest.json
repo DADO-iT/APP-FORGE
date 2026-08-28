@@ -1,0 +1,25 @@
+{
+  "_comment": "Machine-readable status manifest for APP_FORGE Hammer, ahead of any public release. Not a live update-check endpoint yet (CRQ-20260827-030 is still draft) - a stable, parseable place for internal tooling to check against while Hammer is in development.",
+  "product": "APP_FORGE",
+  "currentPublicVersion": "2.1",
+  "preview": {
+    "codename": "Hammer",
+    "targetVersion": "2.3",
+    "status": "in-development",
+    "released": false,
+    "lastUpdated": "2026-08-28"
+  },
+  "features": [
+    { "id": "global-resource-folder", "title": "Configurable Resource Folders", "since": "2.3" },
+    { "id": "native-aot", "title": "Native AOT Engine", "since": "2.3" },
+    { "id": "live-log-streaming", "title": "Live Log Streaming", "since": "2.3" },
+    { "id": "automatic-bundle-management", "title": "Automatic Bundle Management", "since": "2.3" },
+    { "id": "expanded-version-sources", "title": "Expanded Version Sources", "since": "2.3" },
+    { "id": "psadt-bds-integration", "title": "PSADT / BDS Integration", "since": "2.3" }
+  ],
+  "links": {
+    "publicSite": "https://dado-it.github.io/APP-FORGE/",
+    "previewPage": "https://dado-it.github.io/APP-FORGE/hammer-preview/",
+    "latestPublicRelease": "https://github.com/DADO-iT/APP-FORGE/releases/latest"
+  }
+}
