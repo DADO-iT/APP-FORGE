@@ -119,10 +119,25 @@ A free license is required — simply create an issue in our [License Repository
 | Version | Codename | Status |
 |---------|----------|--------|
 | **v2.1** | ⚒️ **Anvil** | ✅ Production |
+| v2.2 | 🕳️ Punch | 📋 Planned |
 | v2.3 | 🔨 Hammer | 🔴 In Development · [Preview →](https://dado-it.github.io/APP-FORGE/hammer-preview/) |
 | v2.4 | 💨 Bellows | 📋 Planned |
 | v2.5 | 🔧 Tongs | 📋 Planned |
-| v3.0 | ⚔️ Damascus | 🏆 Major Release |
+| v2.6 | 〰️ Fuller | 📋 Planned |
+| v2.7 | ⛏️ Chisel | 📋 Planned |
+| v2.8 | 🪨 Whetstone | 📋 Planned |
+| v2.9 | 🔩 Swage | 📋 Planned |
+| **v3.0** | ⚔️ **Damascus** | 🏆 Major Release |
+| v3.1 | 🗜️ Vise | 📋 Planned |
+| v3.2 | 🕳️ Hardy | 📋 Planned |
+| v3.3 | ⚪ Pritchel | 📋 Planned |
+| v3.4 | 📐 Drift | 📋 Planned |
+| v3.5 | 🔄 Mandrel | 📋 Planned |
+| v3.6 | ▪️ Flatter | 📋 Planned |
+| v3.7 | 🔘 Bolster | 📋 Planned |
+| v3.8 | 📏 Set Hammer | 📋 Planned |
+| v3.9 | 🔥 Rake | 📋 Planned |
+| **v4.0** | 🎌 **Tamahagane** | 🏆 Major Release |
 
 ---
 
